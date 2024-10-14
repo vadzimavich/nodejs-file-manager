@@ -1,19 +1,10 @@
-const args = process.argv.slice(2);
-let username = 'Username';
-args.forEach(arg => {
-    if (arg.startsWith('--username=')) {
-        username = arg.split('=')[1];
-    }
-});
+import { startCLI } from './commands.js';
+import process from 'process';
+
+const username = process.env.npm_config_username || 'Anonymous';
 
 console.log(`Welcome to the File Manager, ${username}!`);
+console.log(`You are currently in ${process.cwd()}`);
 
-const printCurrentDir = () => {
-    console.log(`You are currently in ${process.cwd()}`);
-};
-printCurrentDir();
+startCLI(username);
 
-process.on('SIGINT', () => {
-    console.log(`\nThank you for using File Manager, ${username}, goodbye!`);
-    process.exit();
-});

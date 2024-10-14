@@ -1,5 +1,6 @@
 import readline from 'readline';
 import { getEOL, getCPUsInfo, getHomeDir, getUsername, getArch } from './osOperations.js';
+import { navigateUp, changeDirectory, listFiles } from './navigation.js';
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -32,16 +33,28 @@ export const startCLI = (username) => {
       default:
         console.log('Invalid OS command');
       }
-    break;
+      break;
+
+    case 'up':
+      await navigateUp();
+      break;
+
+    case 'cd':
+      await changeDirectory(args[1]);
+      break;
+
+    case 'ls':
+      await listFiles();
+      break;
 
     case '.exit':
       console.log(`Thank you for using File Manager, ${username}, goodbye!`);
       rl.close();
       process.exit();
     default:
-      console.log('Invalid command');
+      console.log('Invalid input');
     }
-  });
+  } );
 
   rl.on('SIGINT', () => {
     console.log(`\nThank you for using File Manager, ${username}, goodbye!`);

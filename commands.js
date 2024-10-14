@@ -3,6 +3,7 @@ import { getEOL, getCPUsInfo, getHomeDir, getUsername, getArch } from './osOpera
 import { navigateUp, changeDirectory, listFiles } from './navigation.js';
 import { readFile, createFile, renameFile, copyFile, moveFile, deleteFile } from './fileOperations.js';
 import { calculateHash } from './hash.js';
+import { compressFile, decompressFile } from './compress.js';
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -81,6 +82,16 @@ export const startCLI = (username) => {
       await calculateHash(args[1]);
       break;
 
+    // ZIP OPERATIONS  
+    case 'compress':
+      await compressFile(args[1], args[2]);
+      break;
+
+    case 'decompress':
+      await decompressFile(args[1], args[2]);
+      break;  
+
+    // EXIT
     case '.exit':
       console.log(`Thank you for using File Manager, ${username}, goodbye!`);
       rl.close();

@@ -2,6 +2,7 @@ import readline from 'readline';
 import { getEOL, getCPUsInfo, getHomeDir, getUsername, getArch } from './osOperations.js';
 import { navigateUp, changeDirectory, listFiles } from './navigation.js';
 import { readFile, createFile, renameFile, copyFile, moveFile, deleteFile } from './fileOperations.js';
+import { calculateHash } from './hash.js';
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -14,6 +15,7 @@ export const startCLI = (username) => {
     const command = args[0];
 
     switch (command) {
+      // OS OPERATIONS
       case 'os':
       switch (args[1]) {
       case '--EOL':
@@ -36,6 +38,7 @@ export const startCLI = (username) => {
       }
       break;
 
+    // NAVIGATION
     case 'up':
       await navigateUp();
       break;
@@ -48,6 +51,7 @@ export const startCLI = (username) => {
       await listFiles();
       break;
 
+    // FILE OPERATIONS
       case 'cat':
         await readFile(args[1]);
         break;
@@ -71,6 +75,11 @@ export const startCLI = (username) => {
       case 'rm':
         await deleteFile(args[1]);
         break;  
+
+    // HASH CALC
+    case 'hash':
+      await calculateHash(args[1]);
+      break;
 
     case '.exit':
       console.log(`Thank you for using File Manager, ${username}, goodbye!`);

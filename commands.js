@@ -1,6 +1,7 @@
 import readline from 'readline';
 import { getEOL, getCPUsInfo, getHomeDir, getUsername, getArch } from './osOperations.js';
 import { navigateUp, changeDirectory, listFiles } from './navigation.js';
+import { readFile, createFile, renameFile, copyFile, moveFile, deleteFile } from './fileOperations.js';
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -46,6 +47,30 @@ export const startCLI = (username) => {
     case 'ls':
       await listFiles();
       break;
+
+      case 'cat':
+        await readFile(args[1]);
+        break;
+
+      case 'add':
+        await createFile(args[1]);
+        break;
+
+      case 'rn':
+        await renameFile(args[1], args[2]);
+        break;
+
+      case 'cp':
+        await copyFile(args[1], args[2]);
+        break;
+
+      case 'mv':
+        await moveFile(args[1], args[2]);
+        break;
+
+      case 'rm':
+        await deleteFile(args[1]);
+        break;  
 
     case '.exit':
       console.log(`Thank you for using File Manager, ${username}, goodbye!`);
